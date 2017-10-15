@@ -1,7 +1,10 @@
-let webpackCfg = require('./webpack-env-config');
+const getWebpackConfig = require('./get-webpack-config');
 
-// Set node environment to testing
 process.env.NODE_ENV = 'test';
+
+process.env.APP_ENV = 'test';
+
+const webpackCfg = getWebpackConfig();
 
 module.exports = function(config) {
   config.set({

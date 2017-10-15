@@ -11,9 +11,6 @@ require('core-js/fn/object/assign');
 // компиляцию и запуск приложения из приложений node.js
 const webpack = require('webpack');
 
-// Импортируем также DevServer
-const WebpackDevServer = require('webpack-dev-server');
-
 const getWebpackConfig = require('./get-webpack-config');
 
 // Библиотека для работы с аргументами командной строки
@@ -38,43 +35,19 @@ const config = getWebpackConfig();
 // Получаем ссылку на скомпилированое приложение как объект
 const compiler = webpack(config);
 
-const port = config.devServer.port;
+compiler.run(function(err, stats) {
 
-// Запускаем DevServer на базе скомпилированного нами
-// Это веб сервер, который умеет выдавать html, css и js нашего скомпилированного приложения
-// Кроме того, он смотрит за исходниками, из которых произошла компиляция, и если они изменились,
-// то запускает перекомпиляцию
-new WebpackDevServer(compiler, config.devServer)
-
-  .listen(
-
-    // В конфиге написан порт, на котором нужно открывать DevServer
-    port,
-
-    'localhost',
-
-    (err) => {
-      if(err) {
-        console.log(err);
-      }
-      console.log('Listening at localhost:' + port);
-    }
-  );
-
-let isInitialCompilation = true;
-
-compiler.plugin('done', () => {
-
-  if(isInitialCompilation) {
-    // Ensures that we log after webpack printed its stats (is there a better way?)
-    setTimeout(() => {
-      console.log('\n✓ The bundle is now ready for serving!\n');
-      console.log('  Open in iframe mode:\t\x1b[33m%s\x1b[0m', 'http://localhost:' + port + '/webpack-dev-server/');
-      console.log('  Open in inline mode:\t\x1b[33m%s\x1b[0m', 'http://localhost:' + port + '/\n');
-      console.log('  \x1b[33mHMR is active\x1b[0m. The bundle will automatically rebuild and live-update on changes.')
-    }, 350);
+  if(err) {
+    console.log('Error: ' + err);
   }
 
-  isInitialCompilation = false;
+  const jsonStats = stats.toJson();
 
+  if(jsonStats.errors.length > 0) {
+    jsonStats.errors.forEach(it => console.log('ERROR ' + it));
+  }
+
+  if(jsonStats.warnings.length > 0) {
+    jsonStats.warnings.forEach(it => console.log('WARN ' + it));
+  }
 });
