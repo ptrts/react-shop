@@ -60,7 +60,8 @@ module.exports = () => {
   let config = {
 
     devtool: switchEnv({
-      dev: 'eval-source-map',
+      // dev: 'eval-source-map',
+      dev: 'source-map',
       dist: 'sourcemap',
       test: 'eval'
     }),
@@ -244,6 +245,7 @@ module.exports = () => {
 
         vendor: [
           'normalize.css',
+          'lodash',
           'react',
           'react-dom'
         ]
