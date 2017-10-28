@@ -35,4 +35,6 @@ bower_components/
 .idea
 *.iml
 
+.yarnclean
 yarn.lock
+yarn-error.log

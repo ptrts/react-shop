@@ -5,8 +5,11 @@
 // Это для работы с webpack через интерфейс node.js
 const webpack = require('webpack');
 
-// Плагин вебпака для боуера (зачем???)
-const BowerWebpackPlugin = require('bower-webpack-plugin');
+const NameAllModulesPlugin = require('name-all-modules-plugin');
+
+const CleanWebpackPlugin = require('clean-webpack-plugin');
+
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const {ifDev, ifDist, ifTest, ifNotTest, switchEnv} = require('./config-env-conditions');
 
@@ -16,12 +19,45 @@ const srcPath = path.join(__dirname, '/src');
 
 const testPath = path.join(__dirname, '/test');
 
+// Функция принимает объект чанка, и должна возвращать его идентификатор
+const buildChunkIdFromChunk = (chunk) => {
+
+  // Если у чанка есть имя...
+  if(chunk.name) {
+
+    // значит мы возвращаем его имя как идентификатор
+    return chunk.name;
+  }
+
+  // Если мы здесь, то у чанка нету имени
+
+  // Тогда мы смотрим внутрь чанка, и берем все модули этого чанка
+  // Будем собирать идентификатор чанка из параметров модулей.
+  return chunk
+
+  // Сначала мы каждый из этих модулей преобразовываем
+    .mapModules(
+      // Каждый очередной модуль мы берем...
+      m => {
+
+        // m.context = /e/java/technologies/webpack/projects/long-term-caching/src
+        // m.request = /e/java/technologies/webpack/projects/long-term-caching/src/async-baz.js
+        // moduleRelativePath = async-baz.js
+
+        let moduleRelativePath = path.relative(m.context, m.request);
+
+        return moduleRelativePath;
+      }
+    )
+
+    // Потом, все вот эти пути мы объединяем в одну строчку через
+    // символ "_"
+    .join('_');
+};
+
 module.exports = () => {
 
   let config = {
-
-    // Нужен дебаг
-    debug: ifNotTest(),
 
     devtool: switchEnv({
       dev: 'eval-source-map',
@@ -30,45 +66,44 @@ module.exports = () => {
     }),
 
     resolve: {
-      extensions: ['', '.js', '.jsx'],
-      alias: Object.assign(
-        {
-          actions: `${srcPath}/actions/`,
-          components: `${srcPath}/components/`,
-          sources: `${srcPath}/sources/`,
-          stores: `${srcPath}/stores/`,
-          styles: `${srcPath}/styles/`,
-          config: `${srcPath}/config/${process.env.APP_ENV}`
-        },
-
-        ifNotTest({
-          'react/lib/ReactMount': 'react-dom/lib/ReactMount'
-        }),
-
-        ifTest({
-          helpers: `${testPath}/helpers`
-        })
-      )
+      extensions: ['.js']
     },
 
     module: {
 
-      // Какие-то прелоудеры, наверно у нового вебпака такое есть
-      preLoaders: [
+      rules: [
 
-        {
-          // Исходники js и jsx
-          test: /\.(js|jsx)$/,
+        ...ifTest([
+          {
+            enforce: 'pre',
 
-          // Которые лежат в каталоге исходников нашего проекта
-          include: srcPath,
+            // Исходники js
+            test: /\.js$/,
 
-          loader: ifTest('isparta-instrumenter-loader', 'eslint-loader')
-        }
-      ],
+            // Которые лежат в каталоге исходников нашего проекта
+            include: srcPath,
 
-      // Теперь нормальные лоудеры
-      loaders: [
+            loader: 'istanbul-instrumenter-loader',
+
+            query: {
+              esModules: true
+            }
+          }
+        ]),
+
+        ...ifNotTest([
+          {
+            enforce: 'pre',
+
+            // Исходники js
+            test: /\.js$/,
+
+            // Которые лежат в каталоге исходников нашего проекта
+            include: srcPath,
+
+            loader: 'eslint-loader'
+          }
+        ]),
 
         ...ifTest([
           {
@@ -105,10 +140,10 @@ module.exports = () => {
         ]),
 
         {
-          // Загружает файлы js и jsx
-          test: /\.(js|jsx)$/,
+          // Загружает файлы js
+          test: /\.js$/,
 
-          loader: ifDev('react-hot!') + 'babel-loader',
+          loader: 'babel-loader',
 
           // Загружать только файлы из таких каталогов
           include: [
@@ -120,35 +155,52 @@ module.exports = () => {
           ]
         }
       ]
-
     },
 
     cache: ifDev(),
 
     plugins: [
 
+      new CleanWebpackPlugin([
+        'dist'
+      ]),
+      new webpack.optimize.CommonsChunkPlugin({
+        name: ['vendor'],
+        minChunks: Infinity
+      }),
+      new webpack.optimize.CommonsChunkPlugin({
+        name: ['runtime']
+      }),
+      new webpack.NamedChunksPlugin(buildChunkIdFromChunk),
+      new webpack.NamedModulesPlugin(),
+      new NameAllModulesPlugin(),
+
+      new HtmlWebpackPlugin({
+        template: './src/index.html',
+        chunksSortMode: 'dependency',
+        inject: 'body'
+      }),
+
       ...ifDev([
         new webpack.HotModuleReplacementPlugin()
       ]),
 
       ...ifNotTest([
-        new webpack.NoErrorsPlugin()
+        new webpack.NoEmitOnErrorsPlugin()
       ]),
-
-      new BowerWebpackPlugin({
-        searchResolveModulesDirectories: false
-      }),
 
       ...ifDist([
         new webpack.DefinePlugin({
           'process.env.NODE_ENV': '"production"'
         }),
 
-        new webpack.optimize.DedupePlugin(),
-
-        new webpack.optimize.UglifyJsPlugin(),
-
-        new webpack.optimize.OccurenceOrderPlugin(),
+        new webpack.optimize.UglifyJsPlugin({
+          sourceMap: true,
+          compress: {
+            warnings: true
+          },
+          minimize: true
+        }),
 
         new webpack.optimize.AggressiveMergingPlugin()
       ])
@@ -156,47 +208,48 @@ module.exports = () => {
   };
 
   Object.assign(
-
     config,
 
     ifNotTest({
 
       // Это наверное как паковать статические ресурсы
       output: {
+        path: path.join(__dirname, '/dist'),
 
-        path: path.join(__dirname, '/dist/assets'),
-
-        // Надо собрать файл app.js
-        filename: 'app.js',
-
-        // Непонятное
-        publicPath: '/assets/'
+        filename: switchEnv({
+          dev: '[name].js',
+          dist: '[name].[chunkhash].js'
+        })
       },
 
       devServer: {
-        contentBase: './src/',
+        contentBase: './dist/',
         historyApiFallback: true,
         hot: true,
         port: 8000,
-        publicPath: '/assets/',
+        host: 'localhost',
         noInfo: false
       },
 
-      entry: [
+      entry: {
 
-        ...ifDev([
-          'webpack-dev-server/client?http://127.0.0.1:8000',
-          'webpack/hot/only-dev-server'
-        ]),
+        main: [
 
-        './src/index'
-      ]
+          ...ifDev([
+            'react-hot-loader/patch'
+          ]),
+
+          './src/index'
+        ],
+
+        vendor: [
+          'normalize.css',
+          'react',
+          'react-dom'
+        ]
+      }
     })
   );
-
-  console.log('WebPack configuration for ' + process.env.APP_ENV);
-
-  console.log(JSON.stringify(config, null, '\t'));
 
   return config;
 };
