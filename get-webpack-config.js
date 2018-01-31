@@ -120,13 +120,35 @@ module.exports = () => {
           },
 
           {
-            test: /\.sass/,
-            loader: 'style-loader!css-loader!sass-loader?outputStyle=expanded&indentedSyntax'
-          },
+            test: /\.scss$/,
 
-          {
-            test: /\.scss/,
-            loader: 'style-loader!css-loader!sass-loader?outputStyle=expanded'
+            use: [
+
+              // inject CSS to page
+              'style-loader',
+
+              // translates CSS into CommonJS modules
+              'css-loader',
+
+              // Run post css actions
+              {
+                loader: 'postcss-loader',
+
+                options: {
+
+                  // post css plugins, can be exported to postcss.config.js
+                  plugins: function () {
+
+                    return [
+                      require('autoprefixer')
+                    ];
+                  }
+                }
+              },
+
+              // compiles Sass to CSS
+              'sass-loader?outputStyle=expanded'
+            ]
           },
 
           {
@@ -247,7 +269,8 @@ module.exports = () => {
           'normalize.css',
           'lodash',
           'react',
-          'react-dom'
+          'react-dom',
+          'bootstrap/dist/css/bootstrap.css'
         ]
       }
     })
