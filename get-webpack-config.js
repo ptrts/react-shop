@@ -270,6 +270,8 @@ module.exports = () => {
           'lodash',
           'react',
           'react-dom',
+          'bootstrap',
+          'jquery',
           'bootstrap/dist/css/bootstrap.css'
         ]
       }
