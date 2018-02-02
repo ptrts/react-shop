@@ -84,7 +84,7 @@ export default class ModalDropdownButton extends React.Component {
               visible={this.state.mouseover}
               onVisibilityChanged={this.handleModalVisibilityChanged}
             >
-              {this.props.modal}
+              {this.props.modalContents}
             </Modal>
 
           </div>

@@ -36,13 +36,13 @@ class AppComponent extends React.Component {
 
           </div>
 
-          <div className="row app-bg-dark-2 text-white p-2">
+          <div className="row app-bg-dark-2 text-white pt-2">
 
             <div className="col-1">
 
               <ModalDropdownButton
                 button="Departments"
-                modal={
+                modalContents={
                   <div style={{height: '50px', width: '600px'}}>This is the modal dropdown for the Departments button</div>
                 }
               />
@@ -58,7 +58,7 @@ class AppComponent extends React.Component {
               <ModalDropdownButton
                 button="Account & Lists"
                 left="-100px"
-                modal={
+                modalContents={
                   <div style={{height: '500px', width: '500px'}}>This is the modal dropdown for the Account & Lists button</div>
                 }
               />

@@ -30,11 +30,11 @@ $theme-colors: (
   height: 0;
   width: 0;
   border-top: 0;
-  border-left: 12px solid transparent;
-  border-right: 12px solid transparent;
-  border-bottom: 12px solid $white;
+  border-left: 14px solid transparent;
+  border-right: 14px solid transparent;
+  border-bottom: 14px solid $white;
   margin-top: 1px;
-  margin-left: -12px;
+  margin-left: -14px;
 }
 
 @mixin app-text-and-bg($postfix, $color) {
