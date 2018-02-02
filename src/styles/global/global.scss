@@ -12,6 +12,31 @@ $theme-colors: (
 @import "~bootstrap/scss/bootstrap";
 ///////////////////////////////////////////////////////////////////////////////////
 
+.nav-dropdown-menu-down-arrow {
+
+  @extend .align-self-center;
+
+  display: inline-block;
+  height: 0;
+  width: 0;
+  border-top: 4px solid $app-grey-6;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-bottom: 0;
+  margin-left: 2px;
+}
+
+.nav-dropdown-menu-up-arrow {
+  height: 0;
+  width: 0;
+  border-top: 0;
+  border-left: 12px solid transparent;
+  border-right: 12px solid transparent;
+  border-bottom: 12px solid $white;
+  margin-top: 1px;
+  margin-left: -12px;
+}
+
 @mixin app-text-and-bg($postfix, $color) {
   .app-text-#{$postfix} {
     color: $color;

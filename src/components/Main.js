@@ -41,11 +41,9 @@ class AppComponent extends React.Component {
             <div className="col-1">
 
               <ModalDropdownButton
-                button={
-                  <div>Departments</div>
-                }
+                button="Departments"
                 modal={
-                  <div>This is the modal dropdown for the Departments button</div>
+                  <div style={{height: '50px', width: '600px'}}>This is the modal dropdown for the Departments button</div>
                 }
               />
 
@@ -58,11 +56,10 @@ class AppComponent extends React.Component {
             <div className="col-3">
 
               <ModalDropdownButton
-                button={
-                  <div>Account & Lists</div>
-                }
+                button="Account & Lists"
+                left="-100px"
                 modal={
-                  <div>This is the modal dropdown for the Account & Lists button</div>
+                  <div style={{height: '500px', width: '500px'}}>This is the modal dropdown for the Account & Lists button</div>
                 }
               />
 

@@ -24,9 +24,13 @@ $app-grey-2: #444;
 $app-grey-3: #5b626a;
 $app-grey-4: #767676;
 $app-grey-5: #949494;
-$app-grey-6: #ccc;
-$app-grey-7: #ddd;
+$app-grey-6: #aaa;
+$app-grey-7: #ccc;
+$app-grey-8: #ddd;
 $app-white: #fff;
+
+
+
 
 $app-orange-1: #e47911;
 $app-orange-2: #f08804;
@@ -58,6 +62,7 @@ $app-transparent-grey-1: rgba(0,0,0,0.03);
 .app-bg-grey-5 {background-color: $app-grey-5;}
 .app-bg-grey-6 {background-color: $app-grey-6;}
 .app-bg-grey-7 {background-color: $app-grey-7;}
+.app-bg-grey-8 {background-color: $app-grey-8;}
 .app-bg-white {background-color: $app-white;}
 
 .app-black {color: $app-black;}
@@ -68,6 +73,7 @@ $app-transparent-grey-1: rgba(0,0,0,0.03);
 .app-grey-5 {color: $app-grey-5;}
 .app-grey-6 {color: $app-grey-6;}
 .app-grey-7 {color: $app-grey-7;}
+.app-grey-8 {color: $app-grey-8;}
 .app-white {color: $app-white;}
 
 .app-bg-orange-1 {background-color: $app-orange-1;}
