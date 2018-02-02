@@ -19,11 +19,12 @@ export default class Modal extends React.Component {
   render() {
     return (
       <div style={{
-        display: this.props.visible ? 'block' : 'none',
+        visibility: this.props.visible ? 'visible' : 'hidden',
         color: 'black',
         backgroundColor: 'white',
         border: 'black solid 1px',
-        width: 400
+        width: 400,
+        transition: 'visibility 0s linear 0.2s'
       }}>
           {this.props.children}
       </div>

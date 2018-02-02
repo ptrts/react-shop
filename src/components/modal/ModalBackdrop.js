@@ -66,14 +66,15 @@ export default class ModalBackdrop extends React.Component {
 
         <div
           style={{
-            display: this.state.visible ? 'block' : 'none',
+            visibility: this.state.visible ? 'visible' : 'hidden',
             position: 'fixed',
             backgroundColor: 'black',
-            opacity: 0.5,
+            opacity: this.state.visible ? 0.5 : 0,
             top: this.state.top,
             bottom: '0px',
             left: '0px',
-            right: '0px'
+            right: '0px',
+            transition: 'visibility 0s linear 0.15s, opacity 0.1s linear 0.15s'
           }}
         />
 
