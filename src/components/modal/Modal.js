@@ -45,6 +45,37 @@ export default class Modal extends React.Component {
     }
   }
 
+  setHideTimeoutIfNeeded() {
+
+    if (!this.hideTimeout) {
+
+      this.hideTimeout = setTimeout(
+
+        () => {
+
+          this.hideTimeout = null;
+
+          this.setState({
+            visible: false
+          });
+
+          if (this.props.onVisibilityChanged) {
+            this.props.onVisibilityChanged(false);
+          }
+        },
+
+        10
+      );
+    }
+  }
+
+  clearHideTimeoutIfNeeded() {
+    if (this.hideTimeout) {
+      clearTimeout(this.hideTimeout);
+      this.hideTimeout = null;
+    }
+  }
+
   updateThings() {
 
     this.setState((prevState, props) => {
@@ -55,10 +86,18 @@ export default class Modal extends React.Component {
 
         if (!prevState.visible) {
 
-          // А мы не показанные, и даже не собираемся
+          // А мы не показанные
 
-          // Значит, надо собраться
+          // Значит, надо собраться показываться, если мы еще не собрались
           this.setShowTimeoutIfNeeded();
+
+        } else {
+
+          // А мы как раз и показываемся
+
+          // Но, может быть, мы запланировали себе скрыться
+          // Тогда - отказываемся от этой идеи
+          this.clearHideTimeoutIfNeeded();
         }
 
       } else {
@@ -69,14 +108,9 @@ export default class Modal extends React.Component {
 
           // А мы отображаемся
 
-          if (this.props.onVisibilityChanged) {
-            this.props.onVisibilityChanged(false);
-          }
+          // Значит, надо собраться скрываться, если мы еще не собрались
+          this.setHideTimeoutIfNeeded();
 
-          // Просто выключиться, без разговоров
-          return {
-            visible: false
-          };
         } else {
 
           // А мы как раз и есть скрытые

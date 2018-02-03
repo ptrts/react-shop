@@ -1,4 +1,3 @@
-
 import React from 'react';
 
 import Modal from '../modal/Modal';
@@ -39,6 +38,9 @@ export default class ModalDropdownButton extends React.Component {
   render() {
     return (
       <div
+        style={{
+          border: 'white solid 1px'
+        }}
         onMouseOver={this.handleMouseOver}
         onMouseOut={this.handleMouseOut}
       >
@@ -52,11 +54,11 @@ export default class ModalDropdownButton extends React.Component {
             <div style={{
               position: 'relative'
             }}>
-
+              {/*>>>>>>>>>>>>>>> КОНТЕКСТ НАЛОЖЕНИЯ <<<<<<<<<<<<<<<<<<<*/}
               <div
                 style={{
                   position: 'absolute',
-                  zIndex: 110,
+                  zIndex: 3,
                   display: this.state.modalVisible ? 'block' : 'none'
                 }}
                 className="nav-dropdown-menu-up-arrow"
@@ -68,14 +70,17 @@ export default class ModalDropdownButton extends React.Component {
 
         </div>
 
+        {/*Отмечаем точку, от которой мы будем плясать*/}
         <div style={{
           position: 'relative'
         }}>
 
+          {/*Указываем на сколько мы будем плясать от этой точки*/}
+          {/*>>>>>>>>>>>>>>> КОНТЕКСТ НАЛОЖЕНИЯ <<<<<<<<<<<<<<<<<<<*/}
           <div
             style={{
               position: 'absolute',
-              zIndex: 100,
+              zIndex: 2,
               left: this.props.left
             }}
           >

@@ -74,7 +74,8 @@ export default class ModalBackdrop extends React.Component {
             bottom: '0px',
             left: '0px',
             right: '0px',
-            transition: 'opacity 0.15s linear 0.2s'
+            transition: 'opacity 0.15s linear 0.2s',
+            zIndex: 1
           }}
         />
 
