@@ -40,31 +40,40 @@ export default class ModalDropdownButton extends React.Component {
       <div
         onMouseOver={this.handleMouseOver}
         onMouseOut={this.handleMouseOut}
-        style={{display: 'inline-block'}}
+        style={{marginLeft: '-10px'}}
       >
 
         <div
-          className="nav-button"
+          className="nav-button d-inline-block"
         >
 
-          <div className="d-inline-flex">
+          <div className="d-inline-flex align-items-end">
 
-            <div>{this.props.button}</div>
+            {/*Для выравнивания по baseline, во flex должны лежать div inline-block, завернутые в другие div*/}
+            <div>
+              <div style={{display: 'inline-block'}}>{this.props.button}</div>
+            </div>
 
-            <div className="nav-dropdown-menu-down-arrow">
+            {/*Для выравнивания по baseline, во flex должны лежать div inline-block, завернутые в другие div*/}
+            <div style={{marginBottom: '2px'}}>
 
-              <div style={{
-                position: 'relative'
-              }}>
-                {/*>>>>>>>>>>>>>>> КОНТЕКСТ НАЛОЖЕНИЯ <<<<<<<<<<<<<<<<<<<*/}
-                <div
-                  style={{
-                    position: 'absolute',
-                    zIndex: 3,
-                    display: this.state.modalVisible ? 'block' : 'none'
-                  }}
-                  className="nav-dropdown-menu-up-arrow"
-                />
+              <div className="nav-dropdown-menu-down-arrow">
+
+                {/*Отмечаем точку, от которой мы будем плясать*/}
+                <div style={{
+                  position: 'relative'
+                }}>
+                  {/*>>>>>>>>>>>>>>> КОНТЕКСТ НАЛОЖЕНИЯ <<<<<<<<<<<<<<<<<<<*/}
+                  <div
+                    style={{
+                      position: 'absolute',
+                      zIndex: 3,
+                      display: this.state.modalVisible ? 'block' : 'none'
+                    }}
+                    className="nav-dropdown-menu-up-arrow"
+                  />
+
+                </div>
 
               </div>
 

@@ -33,7 +33,7 @@ export default class Modal extends React.Component {
           }
         },
 
-        200
+        100
       );
     }
   }

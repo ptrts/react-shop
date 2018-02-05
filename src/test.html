@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Test</title>
+  <style>
+    .flex {
+      display: flex;
+      align-items: baseline;
+      border: 1px solid blue;
+      width: 300px;
+    }
+
+    .inline-block {
+      display: inline-block;
+    }
+
+    .item {
+      border: 1px solid red;
+    }
+
+    .item:first-child {
+      font-size: 200%;
+    }
+  </style>
+</head>
+<body>
+
+
+<div style="display: inline-block;">
+  <div>One</div>
+  <div>Two</div>
+  <div>Three</div>
+</div>
+
+asdfasfasd
+
+
+
+
+<div style="display: flex; align-items: baseline;">
+
+  <div>
+    <div style="display: inline-block;">
+      <div>One</div>
+      <div>Two</div>
+      <div>Three</div>
+    </div>
+  </div>
+
+  <div>
+    <div style="display: inline-block;">Four</div>
+  </div>
+
+</div>
+
+<!--<div class="flex">
+  <div class="item">
+    <div class="inline-block">
+      <div>Lorem</div>
+      <div>Ipsum</div>
+      <div>Dolor</div>
+    </div>
+  </div>
+  <div class="item">
+    <div class="inline-block">
+      Foo bar
+    </div>
+  </div>
+</div>-->
+
+</body>
+</html>

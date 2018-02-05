@@ -14,16 +14,16 @@ class AppComponent extends React.Component {
   render() {
     return (
 
-      <div>
+      <React.Fragment>
 
         <div className="container-fluid">
 
           <br/>
 
-          <div className="row app-bg-dark-2 text-white py-2">
+          <div className="row app-bg-dark-2 text-white py-2 d-flex align-items-baseline">
 
             <div className="col-1">
-              Лого Амазона
+              <h3>Amazon</h3>
             </div>
 
             <div className="col">
@@ -36,12 +36,14 @@ class AppComponent extends React.Component {
 
           </div>
 
-          <div className="row app-bg-dark-2 text-white pt-2 pb-1">
+          <div className="row app-bg-dark-2 text-white pt-2 pb-1 d-flex align-items-baseline">
 
             <div className="col-1">
 
               <ModalDropdownButton
-                button="Departments"
+                button={
+                  <div style={{fontWeight: 'bold'}}>Departments</div>
+                }
                 modalContents={
                   <div style={{height: '50px', width: '600px'}}>This is the modal dropdown for the Departments button</div>
                 }
@@ -56,7 +58,12 @@ class AppComponent extends React.Component {
             <div className="col-3">
 
               <ModalDropdownButton
-                button="Account & Lists"
+                button={
+                  <div style={{lineHeight: '100%'}}>
+                    <small style={{color: '#ccc'}}>Hello. Sign in</small><br/>
+                    <span style={{fontWeight: 'bold'}}>Account & Lists</span>
+                  </div>
+                }
                 left="-100px"
                 modalContents={
                   <div style={{height: '500px', width: '500px'}}>This is the modal dropdown for the Account & Lists button</div>
@@ -202,7 +209,7 @@ class AppComponent extends React.Component {
 
         <div id="modalEnd"/>
         <div>Something</div>
-      </div>
+      </React.Fragment>
     );
   }
 }
