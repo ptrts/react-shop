@@ -38,31 +38,35 @@ export default class ModalDropdownButton extends React.Component {
   render() {
     return (
       <div
-        style={{
-          border: 'white solid 1px'
-        }}
         onMouseOver={this.handleMouseOver}
         onMouseOut={this.handleMouseOut}
+        style={{display: 'inline-block'}}
       >
 
-        <div className="d-inline-flex">
+        <div
+          className="nav-button"
+        >
 
-          <div>{this.props.button}</div>
+          <div className="d-inline-flex">
 
-          <div className="nav-dropdown-menu-down-arrow">
+            <div>{this.props.button}</div>
 
-            <div style={{
-              position: 'relative'
-            }}>
-              {/*>>>>>>>>>>>>>>> КОНТЕКСТ НАЛОЖЕНИЯ <<<<<<<<<<<<<<<<<<<*/}
-              <div
-                style={{
-                  position: 'absolute',
-                  zIndex: 3,
-                  display: this.state.modalVisible ? 'block' : 'none'
-                }}
-                className="nav-dropdown-menu-up-arrow"
-              />
+            <div className="nav-dropdown-menu-down-arrow">
+
+              <div style={{
+                position: 'relative'
+              }}>
+                {/*>>>>>>>>>>>>>>> КОНТЕКСТ НАЛОЖЕНИЯ <<<<<<<<<<<<<<<<<<<*/}
+                <div
+                  style={{
+                    position: 'absolute',
+                    zIndex: 3,
+                    display: this.state.modalVisible ? 'block' : 'none'
+                  }}
+                  className="nav-dropdown-menu-up-arrow"
+                />
+
+              </div>
 
             </div>
 
@@ -81,6 +85,7 @@ export default class ModalDropdownButton extends React.Component {
             style={{
               position: 'absolute',
               zIndex: 2,
+              top: '-5px',
               left: this.props.left
             }}
           >

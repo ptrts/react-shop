@@ -20,7 +20,7 @@ class AppComponent extends React.Component {
 
           <br/>
 
-          <div className="row app-bg-dark-2 text-white p-2">
+          <div className="row app-bg-dark-2 text-white py-2">
 
             <div className="col-1">
               Лого Амазона
@@ -36,7 +36,7 @@ class AppComponent extends React.Component {
 
           </div>
 
-          <div className="row app-bg-dark-2 text-white pt-2">
+          <div className="row app-bg-dark-2 text-white pt-2 pb-1">
 
             <div className="col-1">
 
