@@ -2,6 +2,8 @@ import React from 'react';
 
 import Modal from '../modal/Modal';
 
+import styles from './ModalDropdownButton.scss';
+
 export default class ModalDropdownButton extends React.Component {
 
   constructor(props) {
@@ -43,37 +45,31 @@ export default class ModalDropdownButton extends React.Component {
         style={{marginLeft: '-10px'}}
       >
 
-        <div
-          className="nav-button d-inline-block"
-        >
+        <div className={'d-inline-flex align-items-end ' + styles['nav-button']}>
 
-          <div className="d-inline-flex align-items-end">
+          {/*Для выравнивания по baseline, во flex должны лежать div inline-block, завернутые в другие div*/}
+          <div>
+            <div style={{display: 'inline-block'}}>{this.props.button}</div>
+          </div>
 
-            {/*Для выравнивания по baseline, во flex должны лежать div inline-block, завернутые в другие div*/}
-            <div>
-              <div style={{display: 'inline-block'}}>{this.props.button}</div>
-            </div>
+          {/*Для выравнивания по baseline, во flex должны лежать div inline-block, завернутые в другие div*/}
+          <div>
 
-            {/*Для выравнивания по baseline, во flex должны лежать div inline-block, завернутые в другие div*/}
-            <div style={{marginBottom: '2px'}}>
+            <div className={styles['nav-dropdown-menu-down-arrow']}>
 
-              <div className="nav-dropdown-menu-down-arrow">
-
-                {/*Отмечаем точку, от которой мы будем плясать*/}
-                <div style={{
-                  position: 'relative'
-                }}>
-                  {/*>>>>>>>>>>>>>>> КОНТЕКСТ НАЛОЖЕНИЯ <<<<<<<<<<<<<<<<<<<*/}
-                  <div
-                    style={{
-                      position: 'absolute',
-                      zIndex: 3,
-                      display: this.state.modalVisible ? 'block' : 'none'
-                    }}
-                    className="nav-dropdown-menu-up-arrow"
-                  />
-
-                </div>
+              {/*Отмечаем точку, от которой мы будем плясать*/}
+              <div style={{
+                position: 'relative'
+              }}>
+                {/*>>>>>>>>>>>>>>> КОНТЕКСТ НАЛОЖЕНИЯ <<<<<<<<<<<<<<<<<<<*/}
+                <div
+                  style={{
+                    position: 'absolute',
+                    zIndex: 3,
+                    display: this.state.modalVisible ? 'block' : 'none'
+                  }}
+                  className={styles['nav-dropdown-menu-up-arrow']}
+                />
 
               </div>
 

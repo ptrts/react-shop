@@ -116,11 +116,83 @@ module.exports = () => {
         ...ifNotTest([
           {
             test: /\.css$/,
-            loader: 'style-loader!css-loader'
+            use: [
+              'style-loader',
+
+              {
+                loader: 'css-loader',
+                options: {
+                  modules: true,
+                  importLoaders: 0,
+                  localIdentName: '[name]__[local]___[hash:base64:5]'
+                }
+              }
+            ]
           },
 
           {
             test: /\.scss$/,
+
+            exclude: [
+              path.resolve(__dirname, 'src/styles/global')
+            ],
+
+            use: [
+
+              // inject CSS to page
+              'style-loader',
+
+              // translates CSS into CommonJS modules
+              {
+                loader: 'css-loader',
+                options: {
+                  modules: true,
+                  importLoaders: 3,
+                  localIdentName: '[name]__[local]___[hash:base64:5]'
+                }
+              },
+
+              // Run post css actions
+              {
+                loader: 'postcss-loader',
+
+                options: {
+
+                  // post css plugins, can be exported to postcss.config.js
+                  plugins: function () {
+
+                    return [
+                      require('autoprefixer')
+                    ];
+                  }
+                }
+              },
+
+              // compiles Sass to CSS
+              'sass-loader?outputStyle=expanded',
+
+              // Добавление импортов во все scss, которые будут импортироваться
+              {
+                loader: 'sass-resources-loader',
+                options: {
+                  resources: [
+                    './src/styles/global/_bootstrap_customization.scss',
+                    './node_modules/bootstrap/scss/_functions.scss',
+                    './node_modules/bootstrap/scss/_variables.scss',
+                    './src/styles/global/_app_mixins.scss',
+                    './src/styles/global/_app_variables.scss'
+                  ]
+                }
+              }
+            ]
+          },
+
+          {
+            test: /\.scss$/,
+
+            include: [
+              path.resolve(__dirname, 'src/styles/global')
+            ],
 
             use: [
 

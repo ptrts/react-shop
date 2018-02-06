@@ -1,43 +1,3 @@
-$app-color-1: #131a22;
-$app-color-2: #232f3e;
-$app-color-3: #37475a;
-$app-color-4: #004B91;
-$app-color-7: #0055aa;
-$app-color-5: #0066c0;
-$app-color-6: #247bbd;
-$app-color-7: #48a3c6;
-
-
-
-
-
-
-
-
-
-
-
-
-$app-black: #111;
-$app-grey-1: #333;
-$app-grey-2: #444;
-$app-grey-3: #5b626a;
-$app-grey-4: #767676;
-$app-grey-5: #949494;
-$app-grey-6: #aaa;
-$app-grey-7: #ccc;
-$app-grey-8: #ddd;
-$app-white: #fff;
-
-
-
-
-$app-orange-1: #e47911;
-$app-orange-2: #f08804;
-$app-orange-3: #febd69;
-
-$app-transparent-grey-1: rgba(0,0,0,0.03);
-
 .app-bg-color-1 {background-color: $app-color-1;}
 .app-bg-color-2 {background-color: $app-color-2;}
 .app-bg-color-3 {background-color: $app-color-3;}
@@ -83,3 +43,46 @@ $app-transparent-grey-1: rgba(0,0,0,0.03);
 .app-orange-1 {color: $app-orange-1;}
 .app-orange-2 {color: $app-orange-2;}
 .app-orange-3 {color: $app-orange-3;}
+
+/*@include app-text-and-bg("primary", $app-primary);
+
+$theme-colors: (
+  "app-primary": $app-primary
+);
+
+@for $i from 1 through 11 {
+
+  $primary-darker: theme-color-level("app-primary", $i);
+  $primary-lighter: theme-color-level("app-primary", -$i);
+
+  @include app-text-and-bg("primary-darker-" + $i, $primary-darker);
+  @include app-text-and-bg("primary-lighter-" + $i, $primary-lighter);
+}*/
+
+$app-dark-color-1: #131a22;
+$app-dark-color-2: #232f3e;
+$app-dark-color-3: #37475a;
+$app-dark-colors: (
+  dark-1: $app-dark-color-1,
+  dark-2: $app-dark-color-2,
+  dark-3: $app-dark-color-3,
+);
+
+$app-blue-color-1: #004B91;
+$app-blue-color-2: #0055aa;
+$app-blue-color-3: #0066c0;
+$app-blue-color-4: #247bbd;
+$app-blue-color-5: #48a3c6;
+$app-blue-colors: (
+  blue-1: $app-blue-color-1,
+  blue-2: $app-blue-color-2,
+  blue-3: $app-blue-color-3,
+  blue-4: $app-blue-color-4,
+  blue-5: $app-blue-color-5,
+);
+
+$app-colors: map_merge($app-dark-colors, $app-blue-colors);
+
+@each $name, $color in $app-colors {
+  @include app-text-and-bg($name, $color);
+}

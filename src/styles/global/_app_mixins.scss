@@ -1,0 +1,8 @@
+@mixin app-text-and-bg($postfix, $color) {
+  .app-text-#{$postfix} {
+    color: $color;
+  }
+  .app-bg-#{$postfix} {
+    background-color: $color;
+  }
+}

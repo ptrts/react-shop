@@ -1,0 +1,42 @@
+.nav-button {
+  border: transparent solid 1px;
+  border-radius: 3px;
+  padding-left: 10px;
+  padding-right: 10px;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.nav-button:hover {
+  border-color: $app-grey-3;
+}
+
+.nav-button:active {
+  border-color: $white;
+}
+
+.nav-dropdown-menu-down-arrow {
+
+  align-self: center !important;
+
+  display: inline-block;
+  height: 0;
+  width: 0;
+  border-top: 4px solid $app-grey-6;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-bottom: 0;
+  margin-left: 2px;
+  margin-bottom: 3px;
+}
+
+.nav-dropdown-menu-up-arrow {
+  height: 0;
+  width: 0;
+  border-top: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-bottom: 6px solid $white;
+  margin-top: 1px;
+  margin-left: -6px;
+}
